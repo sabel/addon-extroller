@@ -38,6 +38,13 @@ class Extroller_Processor extends Sabel_Bus_Processor
       }
     }
     
+    $session = $bus->get("session");
+    
+    if ($session && $flash_message = $session->read(Extroller_Mixin::FLASH_SESSION_KEY)) {
+      $controller->flash_message = $flash_message;
+      $session->delete(Extroller_Mixin::FLASH_SESSION_KEY);
+    }
+    
     $action = $bus->get("destination")->getAction();
     
     if ($controller->hasMethod($action)) {

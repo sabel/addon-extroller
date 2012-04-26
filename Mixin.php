@@ -11,6 +11,8 @@
  */
 class Extroller_Mixin extends Sabel_Controller_Page
 {
+  const FLASH_SESSION_KEY = "__flash_message__";
+
   public function checkClientId($requestKey = "SBL_CLIENT_ID")
   {
     $clientId = $this->request->getValueWithMethod($requestKey);
@@ -61,5 +63,9 @@ class Extroller_Mixin extends Sabel_Controller_Page
     
     $message = __METHOD__ . "() logic class not found.";
     throw new Sabel_Exception_ClassNotFound($message);
+  }
+  public function setFlash($message)
+  {
+    $this->session->write(self::FLASH_SESSION_KEY, $message, 1);
   }
 }
